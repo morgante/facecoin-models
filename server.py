@@ -35,11 +35,11 @@ def blocking_task(url, picType):
     print "a"
 
     if (picType == "icon"):
-        os.system("convert face.png -gravity center -extent 300x300 face2.png")
+        os.system("convert face.png -gravity center -extent 400x400 face2.png")
 
     else:
         # Clean it up
-        os.system("convert face.png -sharpen 0x2 +dither -shade 0x45 -colors 3 -colorspace gray -normalize -despeckle -noise 5 face2.png")
+        os.system("convert face.png -sharpen 0x2 +dither -colors 3 -colorspace gray -normalize -despeckle -noise 5 face2.png")
 
     print "c"
     print picType
