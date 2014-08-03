@@ -19,7 +19,7 @@ WORKDIR 	/app/src
 RUN 		make
 RUN 		mv anneal /app/anneal
 RUN 		chmod 777 /app/anneal
-RUN 		/app/anneal /app/src/face.png /app/src/btc.png face.obj
+# RUN 		/app/anneal /app/src/face.png /app/src/btc.png face.obj
 
 # Server
 EXPOSE 		5000
