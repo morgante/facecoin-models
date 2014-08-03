@@ -21,13 +21,19 @@ def run_background(func, callback, args=(), kwds={}):
     _workers.apply_async(func, args, kwds, _callback)
  
 # blocking task like querying to MySQL
-def blocking_task(url):
+def blocking_task(url, picType):
 
-    png = url + '/convert?format=png&w=500'
+    if (picType == "icon"):
+        png = url
+    else:
+        png = url + '/convert?format=png&w=500'
 
     # This code is all super hacky
     opener=urllib.URLopener()
     opener.retrieve(png, "face.png")
+
+    if (picType == "icon"):
+        os.system("convert face.png -gravity center -extent 300x300 face.png")
 
     # Clean it up
     os.system("convert face.png -sharpen 0x2 +dither -shade 0x45 -colors 3 -colorspace gray -normalize -despeckle -noise 5 face2.png")
@@ -49,7 +55,7 @@ class Handler(CorsMixin, RequestHandler):
     def get(self):
     	url = self.get_argument("url", None, "")
 
-        run_background(blocking_task, self.on_complete, (url,))
+        run_background(blocking_task, self.on_complete, (url, "icon"))
  
     def on_complete(self, res):
         self.write(res);
