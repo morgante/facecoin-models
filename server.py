@@ -23,8 +23,6 @@ def run_background(func, callback, args=(), kwds={}):
 # blocking task like querying to MySQL
 def blocking_task(url):
 
-    url = 'https://www.filepicker.io/api/file/V5Wss9Tq6VkCyFlwlSAa'
-
     png = url + '/convert?format=png&w=500'
 
     # This code is all super hacky
