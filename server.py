@@ -5,8 +5,8 @@ from tornado.ioloop import IOLoop
 from tornado.web import Application, asynchronous, RequestHandler
 from multiprocessing.pool import ThreadPool
 import os
-
-import urllib2 as urllib
+import urllib
+import time
 
 import logging
 
@@ -21,10 +21,6 @@ def run_background(func, callback, args=(), kwds={}):
  
 # blocking task like querying to MySQL
 def blocking_task(url):
-
-    import urllib
-    import os
-    import time
 
     url = 'https://www.filepicker.io/api/file/V5Wss9Tq6VkCyFlwlSAa'
 
