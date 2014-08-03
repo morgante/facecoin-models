@@ -1,3 +1,4 @@
 tornado
 requests
 tinys3
+tornado-cors

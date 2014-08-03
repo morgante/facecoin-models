@@ -7,6 +7,7 @@ from multiprocessing.pool import ThreadPool
 import os
 import urllib
 import time
+from tornado_cors import CorsMixin
 
 import logging
 
@@ -43,7 +44,9 @@ def blocking_task(url):
 
     return filename;
  
-class Handler(RequestHandler):
+class Handler(CorsMixin, RequestHandler):
+    CORS_ORIGIN = '*'
+    
     @asynchronous
     def get(self):
     	url = self.get_argument("url", None, "")
@@ -54,12 +57,15 @@ class Handler(RequestHandler):
         self.write(res);
         self.finish()
 
+class StaticHandler(CorsMixin, tornado.web.StaticFileHandler):
+    CORS_ORIGIN = '*'
+
 settings = dict(
     static_path=os.path.join(os.path.dirname(__file__), "obj"),
     debug=True
 )
 
-handlers = [("/", Handler), (r"/(.*)", tornado.web.StaticFileHandler, {"path": "./obj"})]
+handlers = [("/", Handler), (r"/(.*)", StaticHandler, {"path": "./obj"})]
 
 application = Application(handlers, **settings)
 
