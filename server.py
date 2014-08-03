@@ -32,14 +32,22 @@ def blocking_task(url, picType):
     opener=urllib.URLopener()
     opener.retrieve(png, "face.png")
 
-    if (picType == "icon"):
-        os.system("convert face.png -gravity center -extent 300x300 face.png")
+    print "a"
 
-    # Clean it up
-    os.system("convert face.png -sharpen 0x2 +dither -shade 0x45 -colors 3 -colorspace gray -normalize -despeckle -noise 5 face2.png")
+    if (picType == "icon"):
+        os.system("convert face.png -gravity center -extent 300x300 face2.png")
+
+    else:
+        # Clean it up
+        os.system("convert face.png -sharpen 0x2 +dither -shade 0x45 -colors 3 -colorspace gray -normalize -despeckle -noise 5 face2.png")
+
+    print "c"
+    print picType
 
     # Make it into an OBJ
     os.system("/app/anneal face2.png btc.png facecoin.obj")
+
+    print "d"
 
     # Store
     filename = str(time.time()) + ".obj"
@@ -54,7 +62,7 @@ class Handler(CorsMixin, RequestHandler):
     @asynchronous
     def get(self):
     	url = self.get_argument("url", None, "")
-        pType = self.get_argument("photo", "photo", "photo")
+        pType = self.get_argument("type", None, "photo")
 
         run_background(blocking_task, self.on_complete, (url, pType))
  
