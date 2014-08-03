@@ -1,0 +1,1 @@
+convert sama.png -sharpen 0x2 +dither -colors 3 -colorspace gray -normalize -despeckle -noise 5 sama2.png
